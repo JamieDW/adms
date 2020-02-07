@@ -17,9 +17,8 @@ class CarsTableSeeder extends Seeder
 
         $model = App\Models\Model::all()->random();
 
-        App\Models\Car::create([
-            'year'              => $faker->randomElement(config('constants.years')),,
-            'year_id'           => $faker->dateTimeBetween('-20 years')->format('Y'),
+        $car = new App\Models\Car([
+            'year'              => $faker->randomElement(config('constants.years')),
             'make'              => $model->make->name,
             'model'             => $model->name,
             'price'             => $faker->numberBetween(500, 20000),
@@ -34,6 +33,10 @@ class CarsTableSeeder extends Seeder
             'damage_category'   => $faker->optional(0.1)->randomElement(array('A', 'B', 'N', 'S')),
             ]
           );
+
+        $car->year_id = $faker->randomElement(config('constants.years.' . $car->year));
+
+        $car->save();
       }
     }
 }
