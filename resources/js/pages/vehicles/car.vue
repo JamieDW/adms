@@ -9,7 +9,10 @@
   </favourite>
 
   <ul>
-    <li v-for="(value, propertyName, index) in car">
+    <li
+      v-for="(value, propertyName, index) in car"
+      v-bind:key="index"
+      >
       {{ propertyName }}: {{ value }}
     </li>
   </ul>
