@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Enums\MediaCollectionType;
+use App\QueryBuilders\CarQueryBuilder;
 
 use Carbon\Carbon;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -40,8 +41,19 @@ class Car extends Model implements ViewableContract, HasMedia
 
     protected static $logOnlyDirty = true;
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
+    }
+
+    /**
+     * Override the models eloquent builder.
+     *
+     * @return CarQueryBuilder
+     */
+    public function newEloquentBuilder($query): CarQueryBuilder
+    {
+        return new CarQueryBuilder($query);
     }
 
     /**
@@ -49,7 +61,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return array
      */
-    public function registerMediaCollections() {
+    public function registerMediaCollections()
+    {
         $this
             ->addMediaCollection(MediaCollectionType::Images)
             ->acceptsMimeTypes(config('constants.supported_image_mimes'))
@@ -72,7 +85,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getNameAttribute() {
+    function getNameAttribute(): string
+    {
         return "{$this->make} {$this->model}";
     }
 
@@ -81,7 +95,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getImageAttribute() {
+    function getImageAttribute(): string
+    {
         return "https://via.placeholder.com/600x400/4a5568/fff";
     }
 
@@ -90,7 +105,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getPriceFormattedAttribute() {
+    function getPriceFormattedAttribute(): string
+    {
         return '£' . number_format($this->price);
     }
 
@@ -99,7 +115,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getMilesFormattedAttribute() {
+    function getMilesFormattedAttribute(): string
+    {
         return number_format($this->miles) . ' miles';
     }
 
@@ -108,7 +125,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getYearFormattedAttribute() {
+    function getYearFormattedAttribute(): string
+    {
         return "{$this->year} ({$this->year_id} reg)";
     }
 
@@ -117,7 +135,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getEngineSizeFormattedAttribute() {
+    function getEngineSizeFormattedAttribute(): string
+    {
         return $this->engine_size . 'L';
     }
 
@@ -126,8 +145,9 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return bool
      */
-    function getIsNewAttribute() {
-        return $this->year == Carbon::now()->year;
+    function getIsNewAttribute(): bool
+    {
+        return $this->year == date('Y');
     }
 
     /**
@@ -135,7 +155,8 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return bool
      */
-    function getFavouritedAttribute() {
+    function getFavouritedAttribute(): bool
+    {
         return $this->isFavorited();
     }
 }
