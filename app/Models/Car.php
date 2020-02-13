@@ -157,7 +157,7 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getYearFormattedAttribute(): string
     {
-        return "{$this->year} ({$this->year_id} reg)";
+        return $this->year_id ? "{$this->year} ({$this->year_id} reg)" : $this->year;
     }
 
     /**

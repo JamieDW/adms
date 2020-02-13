@@ -18,6 +18,7 @@
         "spatie/laravel-cookie-consent": "^2.11",
         "spatie/laravel-medialibrary": "^7.18",
         "spatie/laravel-permission": "^3.6",
+        "spatie/laravel-query-builder": "^2.7",
         "tymon/jwt-auth": "^1.0.0-rc.5"
     },
     "require-dev": {
@@ -25,7 +26,6 @@
         "doctrine/dbal": "^2.9",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
-        "martinlindhe/laravel-vue-i18n-generator": "^0.1.42",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"

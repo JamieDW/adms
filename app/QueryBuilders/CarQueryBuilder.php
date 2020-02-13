@@ -41,7 +41,7 @@ class CarQueryBuilder extends Builder
      *
      * @return self
      */
-    public function whereMake(string $make): self
+    private function whereMake(string $make): self
     {
         return $this->where('make', $make);
     }

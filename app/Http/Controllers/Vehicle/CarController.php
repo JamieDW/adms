@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Vehicle;
 
-use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\Controller;
+use App\Http\Queries\CarsQuery;
 use App\Http\Requests\CarRequest;
 use App\Jobs\ProcessView;
 use App\Models\Car;
@@ -18,11 +18,9 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CarsQuery $carsQuery)
     {
-        $response = Car::paginate(10);
-
-        return response()->json($response);
+        return response()->json($carsQuery->paginate());
     }
 
     /**
