@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Vehicle;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
+use App\Http\Requests\CarRequest;
 use App\Jobs\ProcessView;
-
 use App\Models\Car;
 
 
@@ -37,10 +38,10 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CarRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CarRequest $request)
     {
         //
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Scopes\PublishedScope;
 use App\Enums\MediaCollectionType;
 use App\QueryBuilders\CarQueryBuilder;
 
@@ -49,6 +50,18 @@ class Car extends Model implements ViewableContract, HasMedia
     protected static $logAttributes = ['*'];
 
     protected static $logOnlyDirty = true;
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new PublishedScope);
+    }
 
     public function __toString()
     {

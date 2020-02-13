@@ -13,11 +13,11 @@ class CreateCarsTable extends Migration
      */
     public function up()
     {
-        // TODO: add a user id to cars table with fk constraint
+        // TODO: move ev attributes to separate model?
 
         Schema::create('cars', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->default(1);
             $table->year('year');
             $table->string('year_id', 2)->nullable();
             $table->string('make');
@@ -48,7 +48,7 @@ class CreateCarsTable extends Migration
             $table->string('connector_type')->nullable();
             $table->char('damage_category', 1)->nullable();
             $table->json('features')->nullable();
-            $table->dateTime('published_at');
+            $table->dateTime('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

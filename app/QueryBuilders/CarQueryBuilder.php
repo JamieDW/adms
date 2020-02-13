@@ -7,6 +7,26 @@ use Illuminate\Database\Eloquent\Builder;
 class CarQueryBuilder extends Builder
 {
     /**
+     * Find cars which are published
+     *
+     * @return self
+     */
+    public function wherePublished(): self
+    {
+        return $this->whereDate('published_at', '<=', now());
+    }
+
+    /**
+     * Find cars which are unpublished
+     *
+     * @return self
+     */
+    public function whereUnpublished(): self
+    {
+        return $this->whereNull('published_at')->orWhereDate('published_at', '>', now());
+    }
+
+    /**
      * Find cars with the registration year matching the current year.
      *
      * @return self
@@ -27,13 +47,23 @@ class CarQueryBuilder extends Builder
     }
 
     /**
-     * Find cars by the car make and model.
+     * Find cars by the car model.
      *
      * @return self
      */
-    public function whereMakeAndModel(string $make, string $model): self
+    private function whereModel(string $model): self
     {
-        return $this->whereMake($make)->where('model', $model);
+        return $this->where('make', $model);
+    }
+
+    /**
+     * Find cars by the car trim.
+     *
+     * @return self
+     */
+    private function whereTrim(string $trim): self
+    {
+        return $this->where('trim', $trim);
     }
 
     /**
@@ -41,9 +71,19 @@ class CarQueryBuilder extends Builder
      *
      * @return self
      */
-    public function whereMakeAndModelAndTrim(string $make, string $model, string $trim): self
+    public function whereIdentity(string $make, string $model = null, string $trim = null): self
     {
-        return $this->whereMakeAndModel($make, $model)->where('trim', $trim);
+        if(is_null($model) && is_null($trim))
+        {
+            return $this->whereMake($make);
+        }
+
+        if(isset($model) && is_null($trim))
+        {
+            return $this->whereMake($make)->whereModel($model);
+        }
+
+        return $this->whereMake($make)->whereModel($model)->whereTrim($trim);
     }
 
     /**
