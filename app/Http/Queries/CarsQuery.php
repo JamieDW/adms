@@ -14,6 +14,7 @@ class CarsQuery extends QueryBuilder
 
         $this
             ->defaultSort('price')
-            ->allowedSorts('price', 'miles');
+            ->allowedSorts('price', 'miles', 'year')
+            ->allowedFilters(['price', 'miles', 'make', 'model', 'trim']);
     }
 }
