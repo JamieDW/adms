@@ -2,6 +2,66 @@
 
 
 return [
+
+  'car' => [
+    'colours' => [
+      'Beige',
+      'Black',
+      'Blue',
+      'Bronze',
+      'Brown',
+      'Burgundy',
+      'Gold',
+      'Green',
+      'Grey',
+      'Indigo',
+      'Magenta',
+      'Maroon',
+      'Multicolour',
+      'Navy',
+      'Orange',
+      'Pink',
+      'Purple',
+      'Red',
+      'Turquoise',
+      'White',
+      'Yellow'
+    ],
+    'transmission_types' => [
+      "Manual",
+      "Automatic",
+      "Semi-automatic"
+    ],
+    'body_types' => [
+      "Combi Van",
+      "Convertible",
+      "Coupé",
+      "Estate",
+      "Hatchback",
+      "MPV",
+      "Minibus",
+      "Other",
+      "Panel Van",
+      "Pickup",
+      "SUV",
+      "Saloon",
+      "Sedan",
+      "Crossover",
+      "Roadsters"
+    ] ,
+    'fuel_types' => [
+      "Petrol",
+      "Diesel",
+      "LPG",
+      "Bio Fuel",
+      "Electric",
+      "Hybrid - Diesel/Electric",
+      "Hybrid - Diesel/Electric Plug-in",
+      "Hybrid - Petrol/Electric",
+      "Hybrid - Diesel/Plug-in"
+    ],
+  ],
+
   'makes' => [
       "ABARTH",
       "AC",
@@ -149,63 +209,6 @@ return [
     "2019" => ["19", "69"],
     "2020" => ["20", "70"],
   ],
-  'colours' => [
-    'Beige'       => 'Beige',
-    'Black'       => 'Black',
-    'Blue'        => 'Blue',
-    'Bronze'      => 'Bronze',
-    'Brown'       => 'Brown',
-    'Burgundy'    => 'Burgundy',
-    'Gold'        => 'Gold',
-    'Green'       => 'Green',
-    'Grey'        => 'Grey',
-    'Indigo'      => 'Indigo',
-    'Magenta'     => 'Magenta',
-    'Maroon'      => 'Maroon',
-    'Multicolour' => 'Multicolour',
-    'Navy'        => 'Navy',
-    'Orange'      => 'Orange',
-    'Pink'        => 'Pink',
-    'Purple'      => 'Purple',
-    'Red'         => 'Red',
-    'Silver'      => 'Silver',
-    'Turquoise'   => 'Turquoise',
-    'White'       => 'White',
-    'Yellow'      => 'Yellow'
-  ],
-  'transmission_types' => [
-    "Manual",
-    "Automatic",
-    "Semi-automatic"
-  ],
-  'body_types' => [
-    "Combi Van",
-    "Convertible",
-    "Coupé",
-    "Estate",
-    "Hatchback",
-    "MPV",
-    "Minibus",
-    "Other",
-    "Panel Van",
-    "Pickup",
-    "SUV",
-    "Saloon",
-    "Sedan",
-    "Crossover",
-    "Roadsters"
-  ] ,
-  'fuel_types' => [
-    "Petrol",
-    "Diesel",
-    "LPG",
-    "Bio Fuel",
-    "Electric",
-    "Hybrid - Diesel/Electric",
-    "Hybrid - Diesel/Electric Plug-in",
-    "Hybrid - Petrol/Electric",
-    "Hybrid - Diesel/Plug-in"
-  ],
   'tax_bands' => [
     "£0",
     "Up to £20",
@@ -244,7 +247,6 @@ return [
     'medium' => 12,
     'large'  => 24
   ],
-
 ];
 
 
