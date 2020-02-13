@@ -54,6 +54,14 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     ];
 
     /**
+     * Get the cars for the given user.
+     */
+    public function cars()
+    {
+        return $this->hasMany(\App\Models\Car::class);
+    }
+
+    /**
      * Get the profile photo URL attribute.
      *
      * @return string

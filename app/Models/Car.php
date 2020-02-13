@@ -103,6 +103,14 @@ class Car extends Model implements ViewableContract, HasMedia
     }
 
     /**
+     * Get the user for the given car model.
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
+
+    /**
      * Get the car's full make and model.
      *
      * @return string

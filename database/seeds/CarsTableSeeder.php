@@ -33,7 +33,7 @@ class CarsTableSeeder extends Seeder
             'description'       => $faker->text(),
             'doors'             => $faker->randomElement(array(2, 3, 4, 5, 6)),
             'damage_category'   => $faker->optional(0.1)->randomElement(array('A', 'B', 'N', 'S')),
-            'published_at'      => $faker->optional(0.8)->dateTimeBetween('-7', Carbon::now()->addDays(7)),
+            'published_at'      => $faker->optional(0.8)->dateTimeBetween('-7 days', Carbon::now()),
             ]
           );
 

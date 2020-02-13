@@ -28,7 +28,7 @@ class CreateCarsTable extends Migration
             $table->string('body_type');
             $table->string('transmission_type');
             $table->string('fuel_type');
-            $table->float('engine_size', 8, 2);
+            $table->double('engine_size', 8, 1);
             $table->string('colour');
             $table->longText('description')->nullable();
             $table->string('annual_tax')->nullable();
