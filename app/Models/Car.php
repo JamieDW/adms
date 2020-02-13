@@ -37,6 +37,15 @@ class Car extends Model implements ViewableContract, HasMedia
         'favourited'
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'published_at',
+    ];
+
     protected static $logAttributes = ['*'];
 
     protected static $logOnlyDirty = true;
