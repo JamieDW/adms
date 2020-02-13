@@ -13,8 +13,11 @@ class CreateCarsTable extends Migration
      */
     public function up()
     {
+        // TODO: add a user id to cars table with fk constraint
+
         Schema::create('cars', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->year('year');
             $table->string('year_id', 2)->nullable();
             $table->string('make');
@@ -45,8 +48,11 @@ class CreateCarsTable extends Migration
             $table->string('connector_type')->nullable();
             $table->char('damage_category', 1)->nullable();
             $table->json('features')->nullable();
+            $table->dateTime('published_at');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
