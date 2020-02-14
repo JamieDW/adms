@@ -10,6 +10,7 @@
 
 import { mapGetters } from 'vuex'
 import axios from 'axios'
+import Car from '../models/car'
 
 export default {
   layout: 'default',
@@ -41,13 +42,18 @@ export default {
 
       let vue = this;
 
-      await axios.get(`/api/cars?page[number]=${pageNum}&page[size]=3`)
-      .then((response) => {
-        vue.pagination = response.data;
-        vue.cars = response.data.data;
-      }).catch((e) => {
+      let response = await Car.page(pageNum).limit(3).get()
 
-      });
+      this.pagination = response;
+      this.cars = response.data;
+
+      // await axios.get(`/api/cars?page[number]=${pageNum}&page[size]=3`)
+      // .then((response) => {
+      //   vue.pagination = response.data;
+      //   vue.cars = response.data.data;
+      // }).catch((e) => {
+
+      // });
     }
   },
 

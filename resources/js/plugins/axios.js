@@ -5,7 +5,10 @@ import Swal from 'sweetalert2'
 
 import i18n from '~/plugins/i18n'
 
+import { Model } from 'vue-api-query'
 
+// inject global axios instance as http client to Model
+Model.$http = axios
 
 // Request interceptor
 axios.interceptors.request.use(request => {
