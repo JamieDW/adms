@@ -20,7 +20,7 @@ class CarController extends Controller
      */
     public function index(CarsQuery $carsQuery)
     {
-        return response()->json($carsQuery->paginate());
+        return response($carsQuery->jsonPaginate());
     }
 
     /**

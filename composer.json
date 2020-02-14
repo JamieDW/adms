@@ -16,6 +16,7 @@
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^3.9",
         "spatie/laravel-cookie-consent": "^2.11",
+        "spatie/laravel-json-api-paginate": "^1.6",
         "spatie/laravel-medialibrary": "^7.18",
         "spatie/laravel-permission": "^3.6",
         "spatie/laravel-query-builder": "^2.7",

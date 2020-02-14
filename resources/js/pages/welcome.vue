@@ -41,7 +41,7 @@ export default {
 
       let vue = this;
 
-      await axios.get(`/api/cars?page=${pageNum}`)
+      await axios.get(`/api/cars?page[number]=${pageNum}&page[size]=3`)
       .then((response) => {
         vue.pagination = response.data;
         vue.cars = response.data.data;
