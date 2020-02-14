@@ -5,6 +5,7 @@ namespace App\Http\Queries;
 use App\Models\Car;
 
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class CarsQuery extends QueryBuilder
 {
@@ -14,7 +15,18 @@ class CarsQuery extends QueryBuilder
 
         $this
             ->defaultSort('price')
-            ->allowedSorts('price', 'miles', 'year')
-            ->allowedFilters(['price', 'miles', 'make', 'model', 'trim']);
+            ->allowedSorts('price', 'miles', 'year', 'published_at')
+            ->allowedFilters([
+                AllowedFilter::scope('min_price'),
+                AllowedFilter::exact('miles'),
+                AllowedFilter::exact('make'),
+                AllowedFilter::exact('model'),
+                AllowedFilter::exact('trim'),
+                AllowedFilter::exact('body_type'),
+                AllowedFilter::exact('transmission_type'),
+                AllowedFilter::exact('fuel_type'),
+                AllowedFilter::exact('engine_size'),
+                AllowedFilter::exact('colour'),
+                ]);
     }
 }

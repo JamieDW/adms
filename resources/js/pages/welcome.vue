@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-      <vehicle-card v-for="car in cars" :car="car" :key="car.id"/>
+      <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
 
       <pagination :pagination="pagination" @paginate="fetchCars" :offset="4"/>
   </div>
@@ -9,7 +9,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import axios from 'axios'
+
 import Car from '../models/car'
 
 export default {
@@ -21,9 +21,7 @@ export default {
 
   data: () => ({
     title: window.config.appName,
-    offset: 4,
     pagination: {},
-    cars: [],
   }),
 
   computed: mapGetters({
@@ -37,23 +35,9 @@ export default {
   methods: {
     async fetchCars () {
 
-      let current_page = this.pagination.current_page;
-      let pageNum = current_page ? current_page : 1;
+      let pageNumber = this.pagination.current_page || 1;
 
-      let vue = this;
-
-      let response = await Car.page(pageNum).limit(3).get()
-
-      this.pagination = response;
-      this.cars = response.data;
-
-      // await axios.get(`/api/cars?page[number]=${pageNum}&page[size]=3`)
-      // .then((response) => {
-      //   vue.pagination = response.data;
-      //   vue.cars = response.data.data;
-      // }).catch((e) => {
-
-      // });
+      this.pagination = await Car.page(pageNumber).limit(3).get()
     }
   },
 

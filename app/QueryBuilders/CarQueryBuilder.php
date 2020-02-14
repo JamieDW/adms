@@ -91,6 +91,23 @@ class CarQueryBuilder extends Builder
      *
      * @return self
      */
+    // public function scopeMinPrice(int $minPrice): self
+    // {
+    //     return $this->where('price', '>=', $minPrice);
+    // }
+
+        // TODO - move to car query builder of possible
+        public function scopeMinPrice(Builder $query, int $minPrice): Builder
+        {
+            return $query->where('price', '>=', $minPrice);
+        }
+
+
+    /**
+     * Find cars based on the cars price.
+     *
+     * @return self
+     */
     public function wherePrice(int $minPrice = null, int $maxPrice = null): self
     {
         if(isset($minPrice) && is_null($maxPrice))

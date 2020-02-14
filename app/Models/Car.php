@@ -16,7 +16,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use CyrildeWit\EloquentViewable\Viewable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
 use ChristianKuri\LaravelFavorite\Traits\Favoriteable;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class Car extends Model implements ViewableContract, HasMedia
 {
@@ -77,6 +77,9 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         return new CarQueryBuilder($query);
     }
+
+
+
 
     /**
      * Register the media collections.
