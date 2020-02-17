@@ -43,3 +43,6 @@ Route::group(['middleware' => 'guest:api'], function () {
 Route::get('cars', 'Vehicle\CarController@index');
 Route::get('cars/{car}', 'Vehicle\CarController@show');
 Route::get('cars/{car}/toggleFavourite', 'Vehicle\CarController@toggleFavourite');
+
+// Constant Routes...
+Route::get('lists', 'ListController@index');
