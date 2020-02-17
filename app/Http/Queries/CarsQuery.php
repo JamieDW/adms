@@ -6,6 +6,7 @@ use App\Models\Car;
 
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 
 class CarsQuery extends QueryBuilder
 {
@@ -14,16 +15,17 @@ class CarsQuery extends QueryBuilder
         parent::__construct(Car::query());
 
         $this
-            ->defaultSort('price')
-            ->allowedSorts('price', 'miles', 'year', 'published_at')
+            ->defaultSort('published_at')
+            ->allowedSorts(
+                AllowedSort::field('date', 'published_at'),
+                'price',
+                'miles',
+                'year')
             ->allowedFilters([
                 AllowedFilter::scope('identity')->ignore(null),
                 AllowedFilter::scope('price')->ignore(null),
                 AllowedFilter::scope('year')->ignore(null),
-                AllowedFilter::exact('mileage')->ignore(null),
-                AllowedFilter::exact('make')->ignore(null),
-                AllowedFilter::exact('model')->ignore(null),
-                AllowedFilter::exact('trim')->ignore(null),
+                AllowedFilter::scope('miles')->ignore(null),
                 AllowedFilter::exact('body_type')->ignore(null),
                 AllowedFilter::exact('transmission_type')->ignore(null),
                 AllowedFilter::exact('fuel_type')->ignore(null),

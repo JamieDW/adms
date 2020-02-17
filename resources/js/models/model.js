@@ -16,8 +16,13 @@ export default class Model extends BaseModel {
   // https://docs.spatie.be/laravel-query-builder/v2/advanced-usage/pagination/
   parameterNames () {
     return {
-      page:   'page[number]',
-      limit:  'page[size]'
+      include:  'include',
+      filter:   'filter',
+      sort:     'sort',
+      fields:   'fields',
+      append:   'append',
+      page:     'page[number]',
+      limit:    'page[size]',
     }
   }
 }

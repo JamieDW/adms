@@ -147,7 +147,7 @@ trait Scopes
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMileage(Builder $query, string $minMiles = "", string $maxMiles = "")
+    public function scopeMiles(Builder $query, string $minMiles = "", string $maxMiles = "")
     {
         if(isset($minMiles) && empty($maxMiles))
         {
