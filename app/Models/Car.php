@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Scopes\PublishedScope;
 use App\Enums\MediaCollectionType;
-use App\QueryBuilders\CarQueryBuilder;
+use App\Traits\Scopes;
 
 use Carbon\Carbon;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -16,11 +16,11 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use CyrildeWit\EloquentViewable\Viewable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
 use ChristianKuri\LaravelFavorite\Traits\Favoriteable;
-use Illuminate\Database\Eloquent\Builder;
+
 
 class Car extends Model implements ViewableContract, HasMedia
 {
-    use SoftDeletes, LogsActivity, Viewable, Favoriteable, HasMediaTrait;
+    use SoftDeletes, Scopes, LogsActivity, Viewable, Favoriteable, HasMediaTrait;
 
     /**
      * The accessors to append to the model's array form.
@@ -67,19 +67,6 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         return $this->name;
     }
-
-    /**
-     * Override the models eloquent builder.
-     *
-     * @return CarQueryBuilder
-     */
-    public function newEloquentBuilder($query): CarQueryBuilder
-    {
-        return new CarQueryBuilder($query);
-    }
-
-
-
 
     /**
      * Register the media collections.
