@@ -45,7 +45,7 @@
 </template>
 
 <script>
-
+import Form from 'vform'
 
 export default {
   middleware: 'guest',

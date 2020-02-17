@@ -6,7 +6,7 @@ import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
 import Pagination from './Pagination'
-
+import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globally.
 [
@@ -16,7 +16,10 @@ import Pagination from './Pagination'
   Child,
   Button,
   Checkbox,
-  Pagination
+  Pagination,
+  HasError,
+  AlertError,
+  AlertSuccess
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })
