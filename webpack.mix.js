@@ -6,15 +6,7 @@ require('laravel-mix-versionhash')
 
 
 mix.js('resources/js/app.js', 'public/dist/js');
-
-const tailwindcss = require('tailwindcss')
-
 mix.sass('resources/sass/app.scss', 'public/dist/css')
-   .options({
-      processCssUrls: false,
-      postCss: [ tailwindcss('tailwind.config.js') ],
-})
-
 mix.disableNotifications()
 
 if (mix.inProduction()) {

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Form from 'vform'
+
 import { mapGetters } from 'vuex'
 
 export default {
