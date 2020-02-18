@@ -17,6 +17,8 @@ mix.sass('resources/sass/app.scss', 'public/dist/css')
 
 mix.disableNotifications()
 
+
+
 if (mix.inProduction()) {
   mix
     // .extract() // Disabled until resolved: https://github.com/JeffreyWay/laravel-mix/issues/1889

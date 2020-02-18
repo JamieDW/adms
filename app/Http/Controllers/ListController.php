@@ -13,6 +13,20 @@ class ListController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(config("constants.{$request->path}"));
+        $list = [];
+
+        if($request->has("filter.type", "filter.name"))
+        {
+            if($request->filter["type"] == "local")
+            {
+                $list = config("constants.lists.{$request->filter["name"]}");
+            }
+            elseif($request->type == 'db')
+            {
+                $list = [];
+            }
+        }
+
+        return response()->json($list);
     }
 }

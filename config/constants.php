@@ -3,66 +3,8 @@
 
 return [
 
-  'car' => [
-    'colours' => [
-      'Beige',
-      'Black',
-      'Blue',
-      'Bronze',
-      'Brown',
-      'Burgundy',
-      'Gold',
-      'Green',
-      'Grey',
-      'Indigo',
-      'Magenta',
-      'Maroon',
-      'Multicolour',
-      'Navy',
-      'Orange',
-      'Pink',
-      'Purple',
-      'Red',
-      'Turquoise',
-      'White',
-      'Yellow'
-    ],
-    'transmission_types' => [
-      "Manual",
-      "Automatic",
-      "Semi-automatic"
-    ],
-    'body_types' => [
-      "Combi Van",
-      "Convertible",
-      "Coupé",
-      "Estate",
-      "Hatchback",
-      "MPV",
-      "Minibus",
-      "Other",
-      "Panel Van",
-      "Pickup",
-      "SUV",
-      "Saloon",
-      "Sedan",
-      "Crossover",
-      "Roadsters"
-    ] ,
-    'fuel_types' => [
-      "Petrol",
-      "Diesel",
-      "LPG",
-      "Bio Fuel",
-      "Electric",
-      "Hybrid - Diesel/Electric",
-      "Hybrid - Diesel/Electric Plug-in",
-      "Hybrid - Petrol/Electric",
-      "Hybrid - Diesel/Plug-in"
-    ],
-  ],
-
-  'makes' => [
+  'lists' => [
+    'makes' => [
       "ABARTH",
       "AC",
       "AIXAM",
@@ -175,7 +117,78 @@ return [
       "WOLSELEY",
       "YAMAHA",
       "ZENOS"
+    ],
+    'body_types' => [
+      "Combi Van",
+      "Convertible",
+      "Coupé",
+      "Estate",
+      "Hatchback",
+      "MPV",
+      "Minibus",
+      "Other",
+      "Panel Van",
+      "Pickup",
+      "SUV",
+      "Saloon",
+      "Sedan",
+      "Crossover",
+      "Roadsters"
+    ],
+    'transmission_types' => [
+      "Manual",
+      "Automatic",
+      "Semi-automatic"
+    ],
+    'fuel_types' => [
+      "Petrol",
+      "Diesel",
+      "LPG",
+      "Bio Fuel",
+      "Electric",
+      "Hybrid - Diesel/Electric",
+      "Hybrid - Diesel/Electric Plug-in",
+      "Hybrid - Petrol/Electric",
+      "Hybrid - Diesel/Plug-in"
+    ],
+    'colours' => [
+      'Beige',
+      'Black',
+      'Blue',
+      'Bronze',
+      'Brown',
+      'Burgundy',
+      'Gold',
+      'Green',
+      'Grey',
+      'Indigo',
+      'Magenta',
+      'Maroon',
+      'Multicolour',
+      'Navy',
+      'Orange',
+      'Pink',
+      'Purple',
+      'Red',
+      'Turquoise',
+      'White',
+      'Yellow'
+    ],
+    'page_limits' => [
+      15,
+      50,
+      100
+    ],
+    'order_bys' => [
+      "Most recent"        => "-date",
+      "Price (Lowest)"     => "price",
+      "Price (Highest)"    => "-price",
+      "Age (Newest first)" => "-year",
+      "Mileage"            => "miles",
+    ],
   ],
+
+
   'years' => [
     "1990",
     "1991",

@@ -1,11 +1,7 @@
 <template>
   <div class="container mx-auto">
 
-      <select v-model.number="limit" @change="fetchCars()">
-        <option value=15>15</option>
-        <option value=50>50</option>
-        <option value=100>100</option>
-      </select>
+    <v-select :options="limits" />
 
       <select v-model="orderBy" @change="fetchCars()">
         <option value="-date">Most recent</option>
@@ -14,6 +10,8 @@
         <option value="-year">Age (Newest first)</option>
         <option value="miles">Mileage</option>
       </select>
+
+
 
       <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
 
@@ -26,6 +24,7 @@
 import { mapGetters } from 'vuex'
 
 import Car from '../models/car'
+import List from '../models/list'
 
 export default {
   layout: 'default',
@@ -38,7 +37,8 @@ export default {
     title:        window.config.appName,
     pagination:   {},
     orderBy:      '-date',
-    limit:        15
+    limits:        [],
+    limit: 3
   }),
 
   computed: mapGetters({
@@ -46,6 +46,9 @@ export default {
   }),
 
   created: function() {
+
+    this.limits = this.getList("local", "page_limits");
+
     this.fetchCars();
   },
 
@@ -59,7 +62,23 @@ export default {
         .page(pageNumber)
         .limit(this.limit)
         .get()
-    }
+    },
+    async getList (type, name) {
+
+      // List
+      //   .where("type", type)
+      //   .where("name", name)
+      //   .get()
+      //   .then(response => {
+      //     debugger;
+      //     return response;
+      //   });
+
+      return await List
+        .where("type", type)
+        .where("name", name)
+        .get()
+    },
   },
 
 

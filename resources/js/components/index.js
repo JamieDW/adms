@@ -5,6 +5,7 @@ import VehicleCard from './VehicleCard'
 import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
+import VSelect from './shared/controls/Select'
 import Pagination from './Pagination'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
@@ -16,6 +17,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   Child,
   Button,
   Checkbox,
+  VSelect,
   Pagination,
   HasError,
   AlertError,
