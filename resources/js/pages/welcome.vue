@@ -4,8 +4,8 @@
       <v-select
         @change="onLimitChanged"
         v-model="limit"
-        :options="limits"
-      >Limit</v-select>
+        :options="limits">
+        Limit</v-select>
 
       <v-select
         @change="onOrderByChanged"
@@ -49,12 +49,32 @@ export default {
 
   created: function() {
 
+    if (localStorage.limit) {
+      this.limit = localStorage.limit;
+    }
+    if (localStorage.orderBy) {
+      this.orderBy = localStorage.orderBy;
+    }
+
     this.getList("local", "limits").then(result => this.limits = result)
     this.getList("local", "order_bys").then(result => this.orderBys = result)
 
     this.getCars();
 
 
+  },
+
+  mounted() {
+
+  },
+
+  watch:{
+    limit(newLimit) {
+      localStorage.limit = newLimit;
+    },
+    orderBy(newOrderBy) {
+      localStorage.orderBy = newOrderBy;
+    },
   },
 
   methods: {
