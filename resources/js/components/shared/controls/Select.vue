@@ -3,21 +3,19 @@
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            :for="id || name">
+            >
             <slot />
         </label>
 
         <div class="relative">
             <select
                 class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                @change="this.$emit('change', this.value)"
-                :v-model="value"
-                :id="id || name"
-                :name="name">
-                <option v-for="(option, key) in options"
-                    :value="key"
-                    :key="key">
-                    {{option}}
+                @change="$emit('change', selected)"
+                v-model="selected">
+                <option v-for="(option, index) in options"
+                    :value="option.value || option.text"
+                    :key="index">
+                    {{option.text}}
                 </option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -30,25 +28,22 @@
 <script>
 export default {
 
-  name: 'VSelect',
+    name: 'VSelect',
 
-  props: {
-      id : { type: String, default: null },
-      name : { type: String, default: 'select' },
-      options : { type: Array, default: [] },
-      value : { type: String, default: null },
-  },
+    props: ['value', 'options'],
 
-  data: () => ({
+    data(){
+        return {
+            selected: this.value
+        }
+    },
 
-  }),
+    created () {
 
-  created () {
+    },
 
-  },
+    methods: {
 
-  methods: {
-
-  }
+    }
 }
 </script>

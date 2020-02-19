@@ -1,14 +1,12 @@
 const path = require('path')
 const fs = require('fs-extra')
 const mix = require('laravel-mix')
+const tailwindcss = require('tailwindcss')
 require('laravel-mix-versionhash')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 
 mix.js('resources/js/app.js', 'public/dist/js');
-
-const tailwindcss = require('tailwindcss')
-
 mix.sass('resources/sass/app.scss', 'public/dist/css')
    .options({
       processCssUrls: false,
@@ -40,7 +38,7 @@ mix.webpackConfig({
   },
   output: {
     chunkFilename: 'dist/js/[chunkhash].js',
-    path: mix.config.hmr ? '/' : path.resolve(__dirname, './public/build')
+    path: mix.config.hmr ? '/' : path.resolve(__dirname, './public')
   }
 })
 
@@ -57,6 +55,6 @@ function publishAseets () {
     fs.removeSync(path.join(publicDir, 'dist'))
   }
 
-  fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'))
-  fs.removeSync(path.join(publicDir, 'build'))
+  fs.copySync(path.join(publicDir, 'dist'), path.join(publicDir, 'dist'))
+  fs.removeSync(path.join(publicDir))
 }

@@ -174,17 +174,24 @@ return [
       'White',
       'Yellow'
     ],
-    'page_limits' => [
+    'limits' => [
       15,
-      50,
-      100
+      30,
+      60,
+      120,
+    ],
+    'limits' => [
+      [ "text" => 15 ],
+      [ "text" => 30 ],
+      [ "text" => 60 ],
+      [ "text" => 120 ],
     ],
     'order_bys' => [
-      "Most recent"        => "-date",
-      "Price (Lowest)"     => "price",
-      "Price (Highest)"    => "-price",
-      "Age (Newest first)" => "-year",
-      "Mileage"            => "miles",
+      [ "text" => "Most recent", "value" => "-date" ],
+      [ "text" => "Price (Lowest)", "value" => "price" ],
+      [ "text" => "Price (Highest)", "value" => "-price" ],
+      [ "text" => "Age (Newest first)", "value" => "-year" ],
+      [ "text" => "Mileage", "value" => "miles" ],
     ],
   ],
 

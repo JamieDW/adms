@@ -1,21 +1,21 @@
 <template>
   <div class="container mx-auto">
 
-    <v-select :options="limits" />
+      <v-select
+        @change="onLimitChanged"
+        v-model="limit"
+        :options="limits"
+      />
 
-      <select v-model="orderBy" @change="fetchCars()">
-        <option value="-date">Most recent</option>
-        <option value="price">Price (Lowest)</option>
-        <option value="-price">Price (Highest)</option>
-        <option value="-year">Age (Newest first)</option>
-        <option value="miles">Mileage</option>
-      </select>
-
-
+      <v-select
+        @change="onOrderByChanged"
+        v-model="orderBy"
+        :options="orderBys"
+      />
 
       <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
 
-      <pagination :pagination="pagination" @paginate="fetchCars" :offset="4"/>
+      <pagination :pagination="pagination" @paginate="getCars"/>
   </div>
 </template>
 
@@ -24,7 +24,8 @@
 import { mapGetters } from 'vuex'
 
 import Car from '../models/car'
-import List from '../models/list'
+
+import axios from 'axios'
 
 export default {
   layout: 'default',
@@ -34,11 +35,12 @@ export default {
   },
 
   data: () => ({
-    title:        window.config.appName,
-    pagination:   {},
-    orderBy:      '-date',
-    limits:        [],
-    limit: 3
+    title     : window.config.appName,
+    pagination: {},
+    limits    : [],
+    orderBys  : [],
+    orderBy   : '-date',
+    limit     : 15
   }),
 
   computed: mapGetters({
@@ -47,15 +49,18 @@ export default {
 
   created: function() {
 
-    this.limits = this.getList("local", "page_limits");
+    this.getList("local", "limits").then(result => this.limits = result)
+    this.getList("local", "order_bys").then(result => this.orderBys = result)
 
-    this.fetchCars();
+    this.getCars();
+
+
   },
 
   methods: {
-    async fetchCars () {
+    async getCars () {
 
-      let pageNumber = this.pagination.current_page || 1;
+      let pageNumber = this.pagination.current_page || 1
 
       this.pagination = await Car
         .orderBy(this.orderBy)
@@ -65,20 +70,20 @@ export default {
     },
     async getList (type, name) {
 
-      // List
-      //   .where("type", type)
-      //   .where("name", name)
-      //   .get()
-      //   .then(response => {
-      //     debugger;
-      //     return response;
-      //   });
-
-      return await List
-        .where("type", type)
-        .where("name", name)
-        .get()
+      return axios
+        .get("api/lists?filter[type]=" + type + "&filter[name]=" + name)
+        .then ( function (response){
+          return response.data;
+        })
     },
+    onLimitChanged (value) {
+      this.limit = value
+      this.getCars();
+    },
+    onOrderByChanged (value) {
+      this.orderBy = value
+      this.getCars();
+    }
   },
 
 
