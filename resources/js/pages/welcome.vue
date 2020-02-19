@@ -85,7 +85,7 @@ export default {
       this.pagination = await Car
         .orderBy(this.orderBy)
         .page(pageNumber)
-        .limit(this.limit)
+        .limit(Number(this.limit))
         .get()
     },
     async getList (type, name) {
