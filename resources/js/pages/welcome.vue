@@ -59,7 +59,9 @@ export default {
     },
     async make(newMake) {
       this.$storage.set('make', newMake)
-      this.models = await this.$storage.remember('models', async () => { return this.getList("controller", "models", this.make); })
+      debugger;
+      this.$storage.remove('models');
+      this.models = await this.$storage.remember('models', async () => { return this.getList("db", "models", this.make); })
     },
     model(newModel) {
       this.$storage.set('model', newModel)
@@ -76,7 +78,7 @@ export default {
 
       this.limits   = await this.$storage.remember('limits', async () => { return this.getList("local", "limits"); })
       this.orderBys = await this.$storage.remember('order_bys', async () => { return this.getList("local", "order_bys"); })
-      this.makes    = await this.$storage.remember('makes', async () => { return this.getList("local", "makes"); })
+      this.makes    = await this.$storage.remember('makes', async () => { return this.getList("db", "makes"); })
 
       this.getCars();
     },

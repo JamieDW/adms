@@ -15,7 +15,7 @@ $config = [
 
   <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
 </head>
-<body class="bg-gray-100 h-screen font-sans">
+<body class="bg-gray-100 h-screen">
 
   <div id="app"></div>
 

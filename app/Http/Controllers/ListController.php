@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
@@ -21,12 +22,24 @@ class ListController extends Controller
             {
                 $list = config("constants.lists.{$request->filter["name"]}");
             }
-            elseif($request->type == 'controller')
+            elseif($request->type == 'db')
             {
-                $list = [];
+                $list = call_user_func_array($request->filter["name"], $request->filter);
             }
         }
 
         return response()->json($list);
     }
+
+    public function makes() {
+        return Cache::remember('makes', config('constants.cache.remember_ttl', 10080), function () {
+            return \App\Models\Make::all();
+        });
+    }
+
+    public function models($make) {
+        return \App\Models\Model::ByMake($make->filter["id"])->get();
+    }
+
+
 }
