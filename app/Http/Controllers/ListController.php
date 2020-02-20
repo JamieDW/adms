@@ -21,7 +21,7 @@ class ListController extends Controller
             {
                 $list = config("constants.lists.{$request->filter["name"]}");
             }
-            elseif($request->type == 'db')
+            elseif($request->type == 'controller')
             {
                 $list = [];
             }

@@ -13,9 +13,9 @@
                 @change="$emit('change', selected)"
                 v-model="selected">
                 <option v-for="(option, index) in options"
-                    :value="option.value || option.text"
+                    :value="isObject(option) ? option.value || option.text : option"
                     :key="index">
-                    {{option.text}}
+                  {{ isObject(option) ? option.text : option }}
                 </option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -32,7 +32,7 @@ export default {
 
     props: ['value', 'options'],
 
-    data(){
+    data() {
         return {
             selected: this.value
         }
@@ -42,8 +42,16 @@ export default {
 
     },
 
-    methods: {
+    watch:{
+        options(newOptions) {
+            this.selected = this.selected || (this.isObject(newOptions[0]) ? newOptions[0].value || newOptions[0].text : newOptions[0])
+        }
+    },
 
+    methods: {
+        isObject(a) {
+            return a instanceof Object
+        }
     }
 }
 </script>
