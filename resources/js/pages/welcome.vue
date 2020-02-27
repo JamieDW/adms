@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto">
+      <v-select @change="onMakeChanged" v-model="make" :options="makes">Make</v-select>
+      <v-select @change="onModelChanged" v-model="model" :options="models">Model</v-select>
 
       <v-select @change="onLimitChanged" v-model="limit" :options="limits">Limit</v-select>
       <v-select @change="onOrderByChanged" v-model="orderBy" :options="orderBys">Order</v-select>
-      <v-select @change="onMakeChanged" v-model="make" :options="makes">Make</v-select>
-      <v-select @change="onModelChanged" v-model="model" :options="models">Models</v-select>
 
       <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
 
@@ -35,7 +35,8 @@ export default {
     models    : [],
     orderBy   : '-date',
     limit     : 15,
-    make      : null
+    make      : null,
+    model     : null
   }),
 
   computed: mapGetters({
@@ -59,7 +60,6 @@ export default {
     },
     async make(newMake) {
       this.$storage.set('make', newMake)
-      debugger;
       this.$storage.remove('models');
       this.models = await this.$storage.remember('models', async () => { return this.getList("db", "models", this.make); })
     },
@@ -92,9 +92,8 @@ export default {
         .limit(Number(this.limit))
 
       if(this.make) {
-
         if(this.model) {
-          query.where('identity', this.make, this.model)
+          query.whereIn('identity', [this.make, this.model])
         }
         else {
           query.where('identity', this.make)
@@ -121,7 +120,12 @@ export default {
       this.getCars();
     },
     onMakeChanged (value) {
+      this.model = null
       this.make = value
+      this.getCars();
+    },
+    onModelChanged (value) {
+      this.model = value
       this.getCars();
     },
   }

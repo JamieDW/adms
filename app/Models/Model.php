@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 class Model extends BaseModel
 {
     /**
-     * The attributes that should be visible in arrays.
+     * The attributes that should be hidden in arrays.
      *
      * @var array
      */
-    protected $visible = ['id', 'name'];
+    protected $hidden = ['created_at', 'updated_at'];
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
     * Get the make for the given car model.
@@ -23,12 +27,20 @@ class Model extends BaseModel
     }
 
     /**
+    * Get the cars for the given car model.
+    */
+    public function cars()
+    {
+        return $this->hasMany(\App\Models\Car::class);
+    }
+
+    /**
      * Scope a query to only include popular users.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByMake($query, $make)
+    public function scopeByMakeId($query, $make)
     {
         return $query->where('make_id', $make);
     }

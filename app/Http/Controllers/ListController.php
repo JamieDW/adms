@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ArrayHelper;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Helper\Helper;
+use MakeHelper;
 
 class ListController extends Controller
 {
@@ -28,7 +28,7 @@ class ListController extends Controller
             {
                 $list = call_user_func_array(
                     array($this, $request->filter["name"]),
-                    $request->filter
+                    array($request->filter)
                 );
             }
         }
@@ -37,18 +37,23 @@ class ListController extends Controller
     }
 
     public function makes() {
-
         return Cache::remember('makes', config('constants.cache.remember_ttl', 10080), function () {
-            $results = \App\Models\Make::all()->toArray();
-            $results = replace_key($results, 'id', 'value');
-            $results = replace_key($results, 'name', 'text');
-            return $results;
+            $results = \App\Models\Make::select('id', 'name')
+                ->withCount('cars')
+                ->get()
+                ->where('cars_count', '>', 0);
+
+            return \App\Helpers\ListHelper::ToSelectList($results);
         });
     }
 
-    public function models($make) {
-        return \App\Models\Model::ByMake($make->filter["id"])->get();
+    public function models($filter) {
+
+        $results = \App\Models\Model::ByMakeId($filter["id"])
+            ->withCount('cars')
+            ->get()
+            ->where('cars_count', '>', 0);
+
+        return \App\Helpers\ListHelper::ToSelectList($results);
     }
-
-
 }

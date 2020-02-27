@@ -20,9 +20,9 @@ class CreateCarsTable extends Migration
             $table->unsignedBigInteger('user_id')->default(1);
             $table->year('year');
             $table->string('year_id', 2)->nullable();
-            $table->string('make');
-            $table->string('model');
-            $table->string('trim')->nullable();
+            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('model_id');
+            $table->unsignedBigInteger('trim_id')->nullable();
             $table->unsignedInteger('price');
             $table->unsignedInteger('miles');
             $table->string('body_type');
@@ -53,6 +53,9 @@ class CreateCarsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('make_id')->references('id')->on('makes');
+            $table->foreign('model_id')->references('id')->on('models');
+            $table->foreign('trim_id')->references('id')->on('trims');
         });
     }
 

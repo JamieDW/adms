@@ -60,7 +60,7 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         parent::boot();
 
-        static::addGlobalScope(new PublishedScope);
+        // static::addGlobalScope(new PublishedScope);
     }
 
     public function __toString()
@@ -101,13 +101,37 @@ class Car extends Model implements ViewableContract, HasMedia
     }
 
     /**
+     * Get the make for the given car model.
+     */
+    public function make()
+    {
+        return $this->belongsTo(\App\Models\Make::class);
+    }
+
+    /**
+     * Get the model for the given car model.
+     */
+    public function model()
+    {
+        return $this->belongsTo(\App\Models\Model::class);
+    }
+
+    /**
+     * Get the model for the given car model.
+     */
+    public function trim()
+    {
+        return $this->belongsTo(\App\Models\Trim::class);
+    }
+
+    /**
      * Get the car's full make and model.
      *
      * @return string
      */
     function getNameAttribute(): string
     {
-        return "{$this->make} {$this->model}";
+        return "{$this->make()->first()} {$this->model()->first()}";
     }
 
     /**

@@ -40,42 +40,6 @@ trait Scopes
     }
 
     /**
-     * Find cars by the car make.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $make
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    private function scopeMake(Builder $query, string $make)
-    {
-        return $query->where('make', $make);
-    }
-
-    /**
-     * Find cars by the car model.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    private function scopeModel(Builder $query, string $model)
-    {
-        return $query->where('make', $model);
-    }
-
-    /**
-     * Find cars by the car trim.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $trim
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    private function scopeTrim(Builder $query, string $trim)
-    {
-        return $query->where('trim', $trim);
-    }
-
-    /**
      * Find cars by the car make, model, and trim.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -88,15 +52,15 @@ trait Scopes
     {
         if(empty($model) && empty($trim))
         {
-            return $query->whereMake($make);
+            return $query->where('make_id', $make);
         }
 
         if(isset($model) && empty($trim))
         {
-            return $query->whereMake($make)->whereModel($model);
+            return $query->where('make_id', $make)->where('model_id', $model);
         }
 
-        return $query->whereMake($make)->whereModel($model)->whereTrim($trim);
+        return $query->where('make_id', $make)->where('model_id', $model)->where('trim_id', $trim);
     }
 
     /**
