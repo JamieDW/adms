@@ -36,7 +36,8 @@ class ListController extends Controller
         return response()->json($list);
     }
 
-    public function makes() {
+    public function makes()
+    {
         return Cache::remember('makes', config('constants.cache.remember_ttl', 10080), function () {
             $results = \App\Models\Make::select('id', 'name')
                 ->withCount('cars')
@@ -47,8 +48,8 @@ class ListController extends Controller
         });
     }
 
-    public function models($filter) {
-
+    public function models($filter)
+    {
         $results = \App\Models\Model::ByMakeId($filter["id"])
             ->withCount('cars')
             ->get()

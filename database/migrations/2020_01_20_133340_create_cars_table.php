@@ -18,8 +18,10 @@ class CreateCarsTable extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(1);
+            $table->string('registration');
             $table->year('year');
             $table->string('year_id', 2)->nullable();
+            $table->boolean('new');
             $table->unsignedBigInteger('make_id');
             $table->unsignedBigInteger('model_id');
             $table->unsignedBigInteger('trim_id')->nullable();
@@ -28,7 +30,7 @@ class CreateCarsTable extends Migration
             $table->string('body_type');
             $table->string('transmission_type');
             $table->string('fuel_type');
-            $table->double('engine_size', 8, 1);
+            $table->unsignedInteger('engine_size');
             $table->string('colour');
             $table->longText('description')->nullable();
             $table->string('annual_tax')->nullable();
@@ -48,10 +50,11 @@ class CreateCarsTable extends Migration
             $table->string('connector_type')->nullable();
             $table->char('damage_category', 1)->nullable();
             $table->json('features')->nullable();
+            $table->date('registered_at')->nullable();
+            $table->date('manufactured_at')->nullable();
             $table->dateTime('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('make_id')->references('id')->on('makes');
             $table->foreign('model_id')->references('id')->on('models');

@@ -73,8 +73,8 @@ export default {
 
       this.limit   = this.$storage.get('limit', this.limit)
       this.orderBy = this.$storage.get('orderBy', this.orderBy)
-      this.make = this.$storage.get('make', this.make)
-      this.model = this.$storage.get('model', this.model)
+      this.make    = this.$storage.get('make', this.make)
+      this.model   = this.$storage.get('model', this.model)
 
       this.limits   = await this.$storage.remember('limits', async () => { return this.getList("local", "limits"); })
       this.orderBys = await this.$storage.remember('order_bys', async () => { return this.getList("local", "order_bys"); })

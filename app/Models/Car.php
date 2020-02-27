@@ -9,7 +9,7 @@ use App\Scopes\PublishedScope;
 use App\Enums\MediaCollectionType;
 use App\Traits\Scopes;
 
-use Carbon\Carbon;
+
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
