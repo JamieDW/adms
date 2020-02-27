@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ArrayHelper;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Helper\Helper;
 
 class ListController extends Controller
 {
@@ -22,9 +24,12 @@ class ListController extends Controller
             {
                 $list = config("constants.lists.{$request->filter["name"]}");
             }
-            elseif($request->type == 'db')
+            elseif($request->filter["type"] == 'db')
             {
-                $list = call_user_func_array($request->filter["name"], $request->filter);
+                $list = call_user_func_array(
+                    array($this, $request->filter["name"]),
+                    $request->filter
+                );
             }
         }
 
@@ -32,8 +37,12 @@ class ListController extends Controller
     }
 
     public function makes() {
+
         return Cache::remember('makes', config('constants.cache.remember_ttl', 10080), function () {
-            return \App\Models\Make::all();
+            $results = \App\Models\Make::all()->toArray();
+            $results = replace_key($results, 'id', 'value');
+            $results = replace_key($results, 'name', 'text');
+            return $results;
         });
     }
 
