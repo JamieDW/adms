@@ -55,6 +55,7 @@ class CreateCarsTable extends Migration
             $table->dateTime('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('make_id')->references('id')->on('makes');
             $table->foreign('model_id')->references('id')->on('models');
