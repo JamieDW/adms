@@ -100,8 +100,9 @@ class Car extends Model implements ViewableContract, HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this
+            ->addMediaConversion('webp')
             ->performOnCollections(MediaCollectionType::Images)
-            ->format("webp");
+            ->format('webp');
     }
 
     /**
