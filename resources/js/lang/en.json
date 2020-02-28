@@ -43,8 +43,8 @@
         "throttle": "Too many login attempts. Please try again in {seconds} seconds."
     },
     "pagination": {
-        "previous": "&laquo; Previous",
-        "next": "Next &raquo;"
+        "previous": "Previous",
+        "next": "Next"
     },
     "passwords": {
         "password": "Passwords must be at least eight characters and match the confirmation.",

@@ -1,27 +1,17 @@
 <template>
     <ul class="flex list-reset border border-grey-light rounded w-auto font-sans">
         <li v-if="pagination.current_page > 1">
-            <a class="block hover:text-white hover:bg-blue text-blue border-r border-grey-light px-3 py-2"
-                href="#"
-                @click.prevent="change(pagination.current_page -1)"
-            >
-                Previous
+            <a href="#" @click.prevent="change(pagination.current_page -1)" class="block hover:text-white hover:bg-blue text-blue border-r border-grey-light px-3 py-2">
+                {{ $t("pagination.previous") }}
             </a>
         </li>
         <li v-for="page in pages" :key="page" >
-            <a :class="[page == pagination.current_page ? 'text-white bg-blue border-r border-blue':'hover:text-white hover:bg-blue text-blue border-r border-grey-light', 'block px-3 py-2']"
-               href="#"
-               @click.stop="change(page)"
-            >
+            <a href="#" @click.stop="change(page)" :class="[page == pagination.current_page ? 'text-white bg-blue border-r border-blue':'hover:text-white hover:bg-blue text-blue border-r border-grey-light', 'block px-3 py-2']">
                 {{ page }}
             </a>
         </li>
         <li v-if="pagination.current_page < pagination.last_page">
-            <a class="block hover:text-white hover:bg-blue text-blue px-3 py-2"
-               href="#"
-               @click.prevent="change(pagination.current_page + 1)"
-            >
-                Next
+            <a href="#" @click.prevent="change(pagination.current_page + 1)" class="block hover:text-white hover:bg-blue text-blue px-3 py-2">{{ $t("pagination.next") }}
             </a>
         </li>
     </ul>
