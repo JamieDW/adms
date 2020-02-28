@@ -9,8 +9,8 @@ use App\Scopes\PublishedScope;
 use App\Enums\MediaCollectionType;
 use App\Traits\Scopes;
 
-
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use CyrildeWit\EloquentViewable\Viewable;
@@ -93,6 +93,18 @@ class Car extends Model implements ViewableContract, HasMedia
     }
 
     /**
+     * Register the media conversations.
+     *
+     * @return array
+     */
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this
+            ->performOnCollections(MediaCollectionType::Images)
+            ->format("webp");
+    }
+
+    /**
      * Get the user for the given car model.
      */
     public function user()
@@ -141,7 +153,7 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getImageAttribute(): string
     {
-        return "https://via.placeholder.com/600x400/4a5568/fff";
+        return "https://via.placeholder.com/600x400/4a5568/fff.webp";
     }
 
     /**
