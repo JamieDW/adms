@@ -6,7 +6,12 @@
       <v-select @change="onLimitChanged" v-model="limit" :options="limits">Limit</v-select>
       <v-select @change="onOrderByChanged" v-model="orderBy" :options="orderBys">Order</v-select>
 
-      <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
+      <div class="flex flex-wrap">
+        <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
+
+      </div>
+
+
 
       <pagination :pagination="pagination" @paginate="getCars"/>
 
