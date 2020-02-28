@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full sm:w-1/2 md:w-1/3 lg:1/4 xl:1/4 p-4">
+    <router-link :to="{ name: 'car.show', params: { id: car.id }}" :title="$t('view', {name: car.name})" class="w-full sm:w-1/2 md:w-1/3 lg:1/4 xl:1/4 p-4">
         <div class="relative pb-2/3">
             <img class="absolute h-full w-full object-cover rounded-lg shadow-md" :src="car.image">
         </div>
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>

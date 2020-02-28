@@ -1,4 +1,5 @@
 {
+    "view": "View {name}",
     "ok": "Ok",
     "cancel": "Cancel",
     "error_alert_title": "Oops...",

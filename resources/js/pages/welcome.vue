@@ -8,7 +8,6 @@
 
       <div class="flex flex-wrap">
         <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
-
       </div>
 
 
