@@ -18,10 +18,11 @@ class CreateCarsTable extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(1);
+            $table->string('vin');
             $table->string('registration');
             $table->year('year');
             $table->string('year_id', 2)->nullable();
-            $table->boolean('new');
+            $table->boolean('new')->default(0);
             $table->unsignedBigInteger('make_id');
             $table->unsignedBigInteger('model_id');
             $table->unsignedBigInteger('trim_id')->nullable();

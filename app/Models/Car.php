@@ -34,7 +34,6 @@ class Car extends Model implements ViewableContract, HasMedia
         'miles_formatted',
         'year_formatted',
         'engine_size_formatted',
-        'is_new',
         'favourited'
     ];
 
@@ -194,17 +193,7 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getEngineSizeFormattedAttribute(): string
     {
-        return $this->engine_size . 'L';
-    }
-
-    /**
-     * Determines if the car is new by comparing the car years against the current year
-     *
-     * @return bool
-     */
-    function getIsNewAttribute(): bool
-    {
-        return $this->year == date('Y');
+        return number_format($this->engine_size / 1000, 1) . 'L';
     }
 
     /**

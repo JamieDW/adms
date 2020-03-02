@@ -15,6 +15,8 @@
       <pagination :pagination="pagination" @paginate="getCars"/>
 
   </div>
+
+
 </template>
 
 <script>

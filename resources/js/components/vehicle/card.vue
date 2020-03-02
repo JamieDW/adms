@@ -19,7 +19,6 @@
 
 import features from './features'
 
-
 export default {
   name: 'vehicle-card',
 
@@ -35,5 +34,3 @@ export default {
   }
 }
 </script>
-
-
