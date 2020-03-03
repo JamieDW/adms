@@ -5,8 +5,8 @@ import VehicleCard from './vehicle/card'
 import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
-import VSelect from './shared/controls/Select'
-import Pagination from './Pagination'
+import VSelect from './controls/Select'
+import Pagination from './controls/Pagination'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globally.

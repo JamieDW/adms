@@ -1,7 +1,7 @@
 <template>
     <router-link :to="{ name: 'car.show', params: { id: car.id }}" :title="$t('view', {name: car.name})" class="w-full sm:w-1/2 md:w-1/3 lg:1/4 xl:1/4 p-4">
         <div class="relative pb-2/3">
-            <img class="absolute h-full w-full object-cover rounded-lg shadow-md" :src="car.image">
+            <img class="absolute h-full w-full object-cover rounded-lg shadow-md" :src="car.cover_image">
         </div>
         <div class="relative px-4 -mt-16">
             <div class=" bg-white p-6 rounded-lg shadow-lg">

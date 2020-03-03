@@ -17,7 +17,6 @@ use CyrildeWit\EloquentViewable\Viewable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
 use ChristianKuri\LaravelFavorite\Traits\Favoriteable;
 
-
 class Car extends Model implements ViewableContract, HasMedia
 {
     use SoftDeletes, Scopes, LogsActivity, Viewable, Favoriteable, HasMediaTrait;
@@ -29,7 +28,7 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     protected $appends = [
         'name',
-        'image',
+        'cover_image',
         'price_formatted',
         'miles_formatted',
         'year_formatted',
@@ -62,6 +61,17 @@ class Car extends Model implements ViewableContract, HasMedia
         // static::addGlobalScope(new PublishedScope);
     }
 
+    public static function SetCoverImages() {
+
+        $files = glob(public_path() . '/pics/*.*');
+        $cars = self::all();
+        $i = 0;
+        foreach ($cars as $car) {
+            $car->addMedia($files[$i])->toMediaCollection(MediaCollectionType::CoverImage);
+            $i++;
+        }
+    }
+
     public function __toString()
     {
         return $this->name;
@@ -72,8 +82,13 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return array
      */
-    public function registerMediaCollections()
+    public function registerMediaCollections(Media $media = null)
     {
+        $this
+            ->addMediaCollection(MediaCollectionType::CoverImage)
+            ->acceptsMimeTypes(config('constants.supported_image_mimes'))
+            ->singleFile()
+            ->withResponsiveImages();
         $this
             ->addMediaCollection(MediaCollectionType::Images)
             ->acceptsMimeTypes(config('constants.supported_image_mimes'))
@@ -100,7 +115,7 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         $this
             ->addMediaConversion('webp')
-            ->performOnCollections(MediaCollectionType::Images)
+            ->performOnCollections(MediaCollectionType::CoverImage, MediaCollectionType::Images)
             ->format('webp');
     }
 
@@ -151,9 +166,9 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getImageAttribute(): string
+    function getCoverImageAttribute(): string
     {
-        return "https://via.placeholder.com/600x400/4a5568/fff.webp";
+        return $this->getFirstMediaUrl(MediaCollectionType::CoverImage, 'webp');
     }
 
     /**
