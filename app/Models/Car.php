@@ -166,9 +166,13 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return string
      */
-    function getCoverImageAttribute(): string
+    function getCoverImageAttribute()
     {
-        return $this->getFirstMediaUrl(MediaCollectionType::CoverImage, 'webp');
+        $coverImage = $this->getMedia(MediaCollectionType::CoverImage)->first();
+        $coverImage->url = $coverImage->getFullUrl('webp');
+        $coverImage->src_set = $coverImage->getSrcset('webp');
+
+        return $coverImage;
     }
 
     /**
