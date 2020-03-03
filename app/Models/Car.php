@@ -87,8 +87,8 @@ class Car extends Model implements ViewableContract, HasMedia
         $this
             ->addMediaCollection(MediaCollectionType::CoverImage)
             ->acceptsMimeTypes(config('constants.supported_image_mimes'))
-            ->singleFile()
-            ->withResponsiveImages();
+            ->withResponsiveImages()
+            ->singleFile();
         $this
             ->addMediaCollection(MediaCollectionType::Images)
             ->acceptsMimeTypes(config('constants.supported_image_mimes'))
