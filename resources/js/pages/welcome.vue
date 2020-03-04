@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-      <search-filters v-on:update-results="onUpdate"/>
+      <search-filters :filters="filter" v-on:update-results="onUpdate"/>
 
       <div class="flex flex-wrap">
         <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
@@ -31,7 +31,12 @@ export default {
   data: () => ({
     title     : window.config.appName,
     pagination: {},
-    filter    : {}
+    filter: {
+      orderBy   : '-date',
+      limit     : 15,
+      make      : null,
+      model     : null
+    },
   }),
 
   computed: mapGetters({
@@ -39,6 +44,12 @@ export default {
   }),
 
   created: function() {
+
+      this.filter.limit   = this.$storage.get('limit', this.filter.limit)
+      this.filter.orderBy = this.$storage.get('orderBy', this.filter.orderBy)
+      this.filter.make    = this.$storage.get('make', this.filter.make)
+      this.filter.model   = this.$storage.get('model', this.filter.model)
+
     this.getCars();
   },
 
@@ -46,8 +57,8 @@ export default {
 
   methods: {
     onUpdate(filter) {
-      debugger;
       this.filter = filter
+      this.getCars();
     },
     async getCars () {
 
@@ -56,14 +67,14 @@ export default {
       let query = car
         .orderBy(this.orderBy)
         .page(pageNumber)
-        .limit(Number(this.limit))
+        .limit(Number(this.filter.limit))
 
-      if(this.make) {
-        if(this.model) {
-          query.whereIn('identity', [this.make, this.model])
+      if(this.filter.make) {
+        if(this.filter.model) {
+          query.whereIn('identity', [this.filter.make, this.filter.model])
         }
         else {
-          query.where('identity', this.make)
+          query.where('identity', this.filter.make)
         }
 
       }

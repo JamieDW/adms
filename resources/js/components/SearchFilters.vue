@@ -96,7 +96,7 @@ export default {
 
   name: 'SearchFilters',
 
-  props: [],
+  props: ['filters'],
 
   data() {
     return {
@@ -105,12 +105,7 @@ export default {
       limits    : [],
       makes     : [],
       models    : [],
-      filter: {
-        orderBy   : '-date',
-        limit     : 15,
-        make      : null,
-        model     : null
-      },
+      filter    : this.filters
     }
   },
 
@@ -121,18 +116,18 @@ export default {
   },
 
   watch:{
-    limit(newLimit) {
+    'filter.limit'(newLimit) {
       this.$storage.set('limit', newLimit)
     },
-    orderBy(newOrderBy) {
+    'filter.orderBy'(newOrderBy) {
       this.$storage.set('orderBy', newOrderBy)
     },
-    async make(newMake) {
+    async 'filter.make'(newMake) {
       this.$storage.set('make', newMake)
       this.$storage.remove('models');
       this.models = await this.$storage.remember('models', async () => { return this.getList("db", "models", this.filter.make); })
     },
-    model(newModel) {
+    'filter.model'(newModel) {
       this.$storage.set('model', newModel)
     },
   },
@@ -143,16 +138,9 @@ export default {
     },
     async populateForm() {
 
-      this.filter.limit   = this.$storage.get('limit', this.filter.limit)
-      this.filter.orderBy = this.$storage.get('orderBy', this.filter.orderBy)
-      this.filter.make    = this.$storage.get('make', this.filter.make)
-      this.filter.model   = this.$storage.get('model', this.filter.model)
-
       this.limits   = await this.$storage.remember('limits', async () => { return this.getList("local", "limits"); })
       this.orderBys = await this.$storage.remember('order_bys', async () => { return this.getList("local", "order_bys"); })
       this.makes    = await this.$storage.remember('makes', async () => { return this.getList("db", "makes"); })
-
-      this.getCars();
     },
     async getList (type, name, id = null) {
       return axios
@@ -163,7 +151,7 @@ export default {
     },
     updateResults() {
       this.toggle()
-      $emit('update-results', this.filter)
+      this.$emit('update-results', this.filter)
     },
     onLimitChanged (value) {
       this.filter.limit = value
