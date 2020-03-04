@@ -2,9 +2,9 @@
 <img
     @load="updateSizes"
     ref="image"
+	:src="src"
     :srcset="srcset"
     :sizes="sizes"
-    :src="src"
     :width="imageWidth"
     >
 </template>
