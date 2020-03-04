@@ -63,13 +63,25 @@ class Car extends Model implements ViewableContract, HasMedia
 
     public static function SetCoverImages() {
 
-        $files = glob(public_path() . '/pics/*.*');
-        $cars = self::all();
-        $i = 0;
-        foreach ($cars as $car) {
-            $car->addMedia($files[$i])->toMediaCollection(MediaCollectionType::CoverImage);
-            $i++;
-        }
+        // $files = glob(public_path() . '/pics/*.*');
+        // $car = self::find(10113);
+
+        //     $car
+        //         ->addMedia($files[0])
+        //         ->withResponsiveImages()
+        //         ->toMediaCollection(MediaCollectionType::CoverImage);
+
+
+        // $files = glob(public_path() . '/pics/*.*');
+        // $cars = self::all();
+        // $i = 0;
+        // foreach ($cars as $car) {
+        //     $car
+        //         ->addMedia($files[$i])
+        //         ->withResponsiveImages()
+        //         ->toMediaCollection(MediaCollectionType::CoverImage);
+        //     $i++;
+        // }
     }
 
     public function __toString()
@@ -169,8 +181,11 @@ class Car extends Model implements ViewableContract, HasMedia
     function getCoverImageAttribute()
     {
         $coverImage = $this->getMedia(MediaCollectionType::CoverImage)->first();
-        $coverImage->url = $coverImage->getFullUrl('webp');
-        $coverImage->src_set = $coverImage->getSrcset('webp');
+
+
+        $coverImage->width = $coverImage->responsiveImages()->files->first()->width();
+        $coverImage->url = $coverImage->getFullUrl();
+        $coverImage->src_set = $coverImage->getSrcset();
 
         return $coverImage;
     }

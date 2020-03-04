@@ -1,15 +1,46 @@
 <template>
 <img
-    :src="image.url"
-    :srcset="image.src_set"
-    sizes="1px"
-    onload="if(this.dataset.sized===undefined){this.sizes=Math.ceil(this.getBoundingClientRect().width/window.innerWidth*100)+'vw';this.dataset.sized=''}"
-    data-sized=""
->
+    @load="updateSizes"
+    ref="image"
+    :srcset="srcset"
+    :sizes="sizes"
+    :src="src"
+    :width="imageWidth"
+    >
 </template>
 <script>
 export default {
-    name: 'ResponsiveImage',
-    props: ['image'],
+
+	name: 'ResponsiveImage',
+
+	props: ['image', 'fallbackImage'],
+
+	data () {
+		return {
+			sizes: '1px',
+			defaultImage: this.fallbackImage,
+		};
+	},
+
+	methods: {
+		calculateWidth () {
+			return Math.ceil( (this.$refs.image.getBoundingClientRect().width / window.innerWidth) * 100);
+		},
+		updateSizes () {
+			this.sizes = this.calculateWidth() + 'vw';
+		},
+	},
+
+	computed: {
+		imageWidth () {
+			return this.image ? this.image.width : null;
+		},
+		src () {
+			return (this.image && this.image.url) ? this.image.url : this.defaultImage;
+		},
+		srcset () {
+			return this.image ? this.image.src_set : this.src;
+		},
+	},
 }
 </script>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Card from './Card'
-import HorizontalCard from './HorizontalCard'
-import VehicleCard from './vehicle/card'
+import SearchFilters from './SearchFilters'
+import VehicleCard from './VehicleCard'
 import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
@@ -12,8 +12,8 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
 // Components that are registered globally.
 [
   Card,
-  HorizontalCard,
   VehicleCard,
+  SearchFilters,
   Child,
   Button,
   Checkbox,

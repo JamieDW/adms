@@ -15,31 +15,18 @@
         <span class="ml-1 text-white font-medium">Filters</span>
       </button>
     </div>
-    <form :class="{ 'hidden': !isOpen, 'block': isOpen }" class="xl:block xl:h-full xl:flex xl:flex-col xl:justify-between">
+    <div :class="{ 'hidden': !isOpen, 'block': isOpen }" class="xl:block xl:h-full xl:flex xl:flex-col xl:justify-between">
       <div class="lg:flex xl:block xl:overflow-y-auto">
         <div class="px-4 py-4 border-t border-gray-900 lg:w-1/3 xl:border-t-0 xl:w-full">
           <div class="flex flex-wrap -mx-2">
-            <label class="block w-1/2 px-2 sm:w-1/4 lg:w-1/2">
-              <span class="text-sm font-semibold text-gray-500">Bedrooms</span>
-              <select class="mt-1 form-select block w-full text-white shadow focus:bg-gray-600">
-                <option>4</option>
-              </select>
-            </label>
-            <label class="block w-1/2 px-2 sm:w-1/4 lg:w-1/2">
-              <span class="text-sm font-semibold text-gray-500">Bathrooms</span>
-              <select class="mt-1 form-select block w-full text-white shadow focus:bg-gray-600">
-                <option>2</option>
-              </select>
-            </label>
-            <label class="mt-4 block w-full px-2 sm:mt-0 sm:w-1/2 lg:mt-4 lg:w-full">
-              <span class="text-sm font-semibold text-gray-500">Price Range</span>
-              <select class="mt-1 form-select block w-full text-white shadow focus:bg-gray-600">
-                <option>Up to $2,000/wk</option>
-              </select>
-            </label>
+            <v-select @change="onMakeChanged" v-model="filter.make" :options="makes">Make</v-select>
+            <v-select @change="onModelChanged" v-model="filter.model" :options="models">Model</v-select>
+
+            <v-select @change="onLimitChanged" v-model="filter.limit" :options="limits">Limit</v-select>
+            <v-select @change="onOrderByChanged" v-model="filter.orderBy" :options="orderBys">Order</v-select>
           </div>
         </div>
-        <div class="px-4 py-4 border-t border-gray-900 lg:w-1/3 lg:border-l xl:w-full">
+        <!-- <div class="px-4 py-4 border-t border-gray-900 lg:w-1/3 lg:border-l xl:w-full">
           <span class="block text-sm font-semibold text-gray-500">Property Type</span>
           <div class="sm:flex sm:-mx-2 lg:block lg:mx-0">
             <label class="mt-3 sm:w-1/4 sm:px-2 flex items-center lg:w-full lg:px-0">
@@ -92,27 +79,106 @@
               <span class="ml-2 text-white">Air conditioning</span>
             </label>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="bg-gray-900 px-4 py-4 sm:text-right">
-        <button class="block w-full sm:w-auto sm:inline-block bg-indigo-500 hover:bg-indigo-400 font-semibold text-white px-4 py-2 rounded-lg xl:block xl:w-full">Update results</button>
+        <button @click="updateResults()" class="block w-full sm:w-auto sm:inline-block bg-indigo-500 hover:bg-indigo-400 font-semibold text-white px-4 py-2 rounded-lg xl:block xl:w-full">Update results</button>
       </div>
-    </form>
+    </div>
   </section>
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
+
+  name: 'SearchFilters',
+
   props: [],
+
   data() {
     return {
       isOpen: false,
+      orderBys  : [],
+      limits    : [],
+      makes     : [],
+      models    : [],
+      filter: {
+        orderBy   : '-date',
+        limit     : 15,
+        make      : null,
+        model     : null
+      },
     }
   },
+
+  created: function() {
+
+    this.populateForm();
+
+  },
+
+  watch:{
+    limit(newLimit) {
+      this.$storage.set('limit', newLimit)
+    },
+    orderBy(newOrderBy) {
+      this.$storage.set('orderBy', newOrderBy)
+    },
+    async make(newMake) {
+      this.$storage.set('make', newMake)
+      this.$storage.remove('models');
+      this.models = await this.$storage.remember('models', async () => { return this.getList("db", "models", this.filter.make); })
+    },
+    model(newModel) {
+      this.$storage.set('model', newModel)
+    },
+  },
+
   methods: {
     toggle() {
       this.isOpen = !this.isOpen
-    }
+    },
+    async populateForm() {
+
+      this.filter.limit   = this.$storage.get('limit', this.filter.limit)
+      this.filter.orderBy = this.$storage.get('orderBy', this.filter.orderBy)
+      this.filter.make    = this.$storage.get('make', this.filter.make)
+      this.filter.model   = this.$storage.get('model', this.filter.model)
+
+      this.limits   = await this.$storage.remember('limits', async () => { return this.getList("local", "limits"); })
+      this.orderBys = await this.$storage.remember('order_bys', async () => { return this.getList("local", "order_bys"); })
+      this.makes    = await this.$storage.remember('makes', async () => { return this.getList("db", "makes"); })
+
+      this.getCars();
+    },
+    async getList (type, name, id = null) {
+      return axios
+        .get("api/lists?filter[type]=" + type + "&filter[name]=" + name + "&filter[id]=" + id)
+        .then ( function (response) {
+          return response.data;
+        })
+    },
+    updateResults() {
+      this.toggle()
+      $emit('update-results', this.filter)
+    },
+    onLimitChanged (value) {
+      this.filter.limit = value
+    },
+    onOrderByChanged (value) {
+      this.filter.orderBy = value
+
+    },
+    onMakeChanged (value) {
+      this.filter.model = null
+      this.filter.make = value
+    },
+    onModelChanged (value) {
+      this.filter.model = value
+    },
   },
 }
 </script>
