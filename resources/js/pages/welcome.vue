@@ -38,7 +38,7 @@ export default {
       model     : null
     },
   }),
-
+// TODO add null option to selects and display it.
   computed: mapGetters({
     authenticated: 'auth/check'
   }),

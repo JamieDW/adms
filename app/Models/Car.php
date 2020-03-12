@@ -182,7 +182,6 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         $coverImage = $this->getMedia(MediaCollectionType::CoverImage)->first();
 
-
         $coverImage->width = $coverImage->responsiveImages()->files->first()->width();
         $coverImage->url = $coverImage->getFullUrl();
         $coverImage->src_set = $coverImage->getSrcset();

@@ -8,7 +8,7 @@
       class="form-checkbox"
       @click="handleClick"
     >
-    <label :for="id || name" class="custom-control-label my-auto">
+    <label :for="id || name" class="my-auto custom-control-label">
       <slot />
     </label>
   </div>
