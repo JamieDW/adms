@@ -13,12 +13,12 @@
     <div :class="openNav ? 'block': 'hidden'" class="flex-grow w-full sm:flex sm:items-center sm:w-auto">
 
       <!-- Top nav links -->
-      <div class="text-sm font-bold sm:flex-grow">
+      <!-- <div class="text-sm font-bold sm:flex-grow">
         <a href="https://laravel.com/docs/5.8" class="block mt-4 mr-4 text-teal-200 lg:inline-block lg:mt-0 hover:text-white">Laravel</a>
         <a href="https://vuejs.org/" class="block mt-4 mr-4 text-teal-200 lg:inline-block lg:mt-0 hover:text-white">Vue.js</a>
         <a href="https://tailwindcss.com/" class="block mt-4 mr-4 text-teal-200 lg:inline-block lg:mt-0 hover:text-white">Tailwind CSS</a>
         <a href="https://github.com/shriker/laravel-vue-spa-tailwind" class="block mt-4 mr-4 text-teal-200 lg:inline-block lg:mt-0 hover:text-white">Github</a>
-      </div>
+      </div> -->
 
       <!-- Authenticated -->
       <div v-if="user" class="flex flex-col items-start justify-between bg-grey-lighter md:flex-row md:items-center">

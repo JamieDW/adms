@@ -1,7 +1,9 @@
 <template>
   <div class="container mx-auto">
 
+
   <favourite
+    v-if="authenticated"
     model="cars"
     v-bind:id="car.id"
     v-bind:favourited="car.is_favourited"
@@ -22,6 +24,8 @@
 
 <script>
 
+import { mapGetters } from 'vuex'
+
 import axios from 'axios'
 
 import Favourite from '~/components/Favourite'
@@ -40,11 +44,13 @@ export default {
     success: ''
   }),
 
-  computed: {
-
-  },
+  computed: mapGetters({
+    authenticated: 'auth/check'
+  }),
 
   async beforeRouteEnter (to, from, next) {
+
+
 
     try {
       const { data } = await axios.get(`/api/cars/${to.params.id}`)

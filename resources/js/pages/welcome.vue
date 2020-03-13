@@ -18,9 +18,6 @@
 import { mapGetters } from 'vuex'
 import car from '../models/car'
 
-
-
-
 export default {
   layout: 'default',
 
