@@ -58,7 +58,7 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         parent::boot();
 
-        // static::addGlobalScope(new PublishedScope);
+        static::addGlobalScope(new PublishedScope);
     }
 
     public static function SetCoverImages() {
@@ -170,7 +170,7 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getNameAttribute(): string
     {
-        return "{$this->make()->first()} {$this->model()->first()}";
+        return "{$this->make} {$this->model}";
     }
 
     /**
@@ -180,13 +180,15 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getCoverImageAttribute()
     {
-        $coverImage = $this->getMedia(MediaCollectionType::CoverImage)->first();
+        $media = $this->getMedia(MediaCollectionType::CoverImage)->first();
 
-        $coverImage->width = $coverImage->responsiveImages()->files->first()->width();
-        $coverImage->url = $coverImage->getFullUrl();
-        $coverImage->src_set = $coverImage->getSrcset();
+        $cover = [
+            'width'   => $media->responsiveImages()->files->first()->width(),
+            'url'     => $media->getFullUrl(),
+            'src_set' => $media->getSrcset()
+        ];
 
-        return $coverImage;
+        return $cover;
     }
 
     /**
