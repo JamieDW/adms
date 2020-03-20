@@ -3,10 +3,10 @@
       <search-filters :filters="filter" v-on:update-results="onUpdate"/>
 
       <div class="flex flex-wrap">
-        <vehicle-card v-for="car in pagination.data" :car="car" :key="car.id"/>
+        <vehicle-card v-for="car in cars" :car="car" :key="car.id"/>
       </div>
 
-      <pagination :pagination="pagination" @paginate="getCars"/>
+      <infinite-loading :identifier="infiniteId" @infinite="onNext"></infinite-loading>
 
   </div>
 
@@ -17,9 +17,15 @@
 
 import { mapGetters } from 'vuex'
 import car from '../models/car'
+import InfiniteLoading from 'vue-infinite-loading';
+import axios from 'axios';
 
 export default {
   layout: 'default',
+
+  components: {
+    InfiniteLoading,
+  },
 
   metaInfo () {
     return { title: this.$t('welcome') }
@@ -27,27 +33,25 @@ export default {
 
   data: () => ({
     title     : window.config.appName,
-    pagination: {},
+    page: 1,
+    cars: [],
+    infiniteId: +new Date(),
     filter: {
       orderBy   : '-date',
-      limit     : 15,
+      limit     : 5,
       make      : null,
       model     : null
     },
   }),
-// TODO add null option to selects and display it.
+  // TODO add null option to selects and display it.
   computed: mapGetters({
     authenticated: 'auth/check'
   }),
 
   created: function() {
-
-      this.filter.limit   = this.$storage.get('limit', this.filter.limit)
       this.filter.orderBy = this.$storage.get('orderBy', this.filter.orderBy)
       this.filter.make    = this.$storage.get('make', this.filter.make)
       this.filter.model   = this.$storage.get('model', this.filter.model)
-
-    this.getCars();
   },
 
   mounted() { },
@@ -55,15 +59,17 @@ export default {
   methods: {
     onUpdate(filter) {
       this.filter = filter
-      this.getCars();
+      this.page = 1;
+      this.cars = [];
+      this.infiniteId += 1;
     },
-    async getCars () {
+    onNext($state) {
 
-      let pageNumber = this.pagination.current_page || 1
+      let vue = this;
 
       let query = car
         .orderBy(this.orderBy)
-        .page(pageNumber)
+        .page(this.page)
         .limit(Number(this.filter.limit))
 
       if(this.filter.make) {
@@ -73,10 +79,19 @@ export default {
         else {
           query.where('identity', this.filter.make)
         }
-
       }
 
-      this.pagination = await query.get()
+      query
+        .get()
+        .then(response => {
+            if (response.data.length) {
+              vue.page++;
+              vue.cars.push(...response.data);
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+        })
 
     },
   }

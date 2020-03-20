@@ -16,7 +16,7 @@ class CarsTableSeeder extends Seeder
       $faker = (new \Faker\Factory())::create();
       $faker->addProvider(new \Faker\Provider\Fakecar($faker));
 
-      for ($i = 0; $i < 9000; $i++) {
+      for ($i = 0; $i < 1000; $i++) {
 
         $model = App\Models\Model::all()->random();
 

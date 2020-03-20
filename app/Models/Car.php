@@ -72,16 +72,16 @@ class Car extends Model implements ViewableContract, HasMedia
         //         ->toMediaCollection(MediaCollectionType::CoverImage);
 
 
-        // $files = glob(public_path() . '/pics/*.*');
-        // $cars = self::all();
-        // $i = 0;
-        // foreach ($cars as $car) {
-        //     $car
-        //         ->addMedia($files[$i])
-        //         ->withResponsiveImages()
-        //         ->toMediaCollection(MediaCollectionType::CoverImage);
-        //     $i++;
-        // }
+        $files = glob(public_path() . '/pics/*.*');
+        $cars = self::all();
+        $i = 0;
+        foreach ($cars as $car) {
+            $car
+                ->addMedia($files[$i])
+                ->withResponsiveImages()
+                ->toMediaCollection(MediaCollectionType::CoverImage);
+            $i++;
+        }
     }
 
     public function __toString()
@@ -125,10 +125,10 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     public function registerMediaConversions(Media $media = null)
     {
-        $this
-            ->addMediaConversion('webp')
-            ->performOnCollections(MediaCollectionType::CoverImage, MediaCollectionType::Images)
-            ->format('webp');
+        // $this
+        //     ->addMediaConversion('webp')
+        //     ->performOnCollections(MediaCollectionType::CoverImage, MediaCollectionType::Images)
+        //     ->format('webp');
     }
 
     /**
@@ -182,13 +182,18 @@ class Car extends Model implements ViewableContract, HasMedia
     {
         $media = $this->getMedia(MediaCollectionType::CoverImage)->first();
 
-        $cover = [
-            'width'   => $media->responsiveImages()->files->first()->width(),
-            'url'     => $media->getFullUrl(),
-            'src_set' => $media->getSrcset()
-        ];
+        if(isset($media))
+        {
+            $cover = [
+                'width'   => $media->responsiveImages()->files->first()->width(),
+                'url'     => $media->getFullUrl(),
+                'src_set' => $media->getSrcset()
+            ];
 
-        return $cover;
+            return $cover;
+        }
+
+        return null;
     }
 
     /**

@@ -15,8 +15,6 @@
           <div class="flex flex-wrap -mx-2">
             <v-select @change="onMakeChanged" v-model="filter.make" :options="makes">Make</v-select>
             <v-select @change="onModelChanged" v-model="filter.model" :options="models">Model</v-select>
-
-            <v-select @change="onLimitChanged" v-model="filter.limit" :options="limits">Limit</v-select>
             <v-select @change="onOrderByChanged" v-model="filter.orderBy" :options="orderBys">Order</v-select>
           </div>
         </div>
@@ -96,7 +94,6 @@ export default {
     return {
       isOpen: false,
       orderBys  : [],
-      limits    : [],
       makes     : [],
       models    : [],
       filter    : this.filters
@@ -110,9 +107,6 @@ export default {
   },
 
   watch:{
-    'filter.limit'(newLimit) {
-      this.$storage.set('limit', newLimit)
-    },
     'filter.orderBy'(newOrderBy) {
       this.$storage.set('orderBy', newOrderBy)
     },
@@ -132,7 +126,7 @@ export default {
     },
     async populateForm() {
 
-      this.limits   = await this.$storage.remember('limits', async () => { return this.getList("local", "limits"); })
+
       this.orderBys = await this.$storage.remember('order_bys', async () => { return this.getList("local", "order_bys"); })
       this.makes    = await this.$storage.remember('makes', async () => { return this.getList("db", "makes"); })
     },
@@ -146,9 +140,6 @@ export default {
     updateResults() {
       this.toggle()
       this.$emit('update-results', this.filter)
-    },
-    onLimitChanged (value) {
-      this.filter.limit = value
     },
     onOrderByChanged (value) {
       this.filter.orderBy = value
