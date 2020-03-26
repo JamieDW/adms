@@ -1,16 +1,15 @@
 <template>
-  <div class="container mx-auto">
-      <search-filters :filters="filter" v-on:update-results="onUpdate"/>
-
-      <div class="flex flex-wrap">
-        <vehicle-card v-for="car in cars" :car="car" :key="car.id"/>
-      </div>
-
-      <infinite-loading :identifier="infiniteId" @infinite="onNext"></infinite-loading>
-
+  <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
+    <search-filters :filters="filter" v-on:update-results="onUpdate"/>
+    <main class="flex flex-wrap py-6 overflow-auto xl:flex-1">
+      <vehicle-card v-for="car in cars" :car="car" :key="car.id"/>
+      <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
+        <span slot="spinner"></span>
+        <span slot="no-more"></span>
+        <span slot="no-results"></span>
+      </infinite-loading>
+    </main>
   </div>
-
-
 </template>
 
 <script>
@@ -33,14 +32,14 @@ export default {
 
   data: () => ({
     title     : window.config.appName,
-    page: 1,
-    cars: [],
+    page      : 1,
+    cars      : [],
     infiniteId: +new Date(),
     filter: {
-      orderBy   : '-date',
-      limit     : 5,
-      make      : null,
-      model     : null
+      orderBy: '-date',
+      limit  : 15,
+      make   : null,
+      model  : null
     },
   }),
   // TODO add null option to selects and display it.
@@ -63,8 +62,7 @@ export default {
       this.cars = [];
       this.infiniteId += 1;
     },
-    onNext($state) {
-
+    infiniteHandler($state) {
       let vue = this;
 
       let query = car
@@ -85,7 +83,7 @@ export default {
         .get()
         .then(response => {
             if (response.data.length) {
-              vue.page++;
+              vue.page += 1;
               vue.cars.push(...response.data);
               $state.loaded();
             } else {

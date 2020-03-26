@@ -1,21 +1,19 @@
 <template>
-  <div class="main-layout">
-    <navbar />
-    <main>
-      <child />
-    </main>
+  <div class="min-h-screen antialiased bg-gray-200 xl:flex xl:flex-col xl:h-screen">
+    <SiteHeader class="xl:flex-shrink-0"/>
+    <child/>
   </div>
 </template>
 
 <script>
-import Navbar from '~/components/Navbar'
 
+import SiteHeader from '~/components/SiteHeader'
 
 export default {
-  name: 'MainLayout',
+  name: 'app',
 
   components: {
-    Navbar
-  }
+    SiteHeader,
+  },
 }
 </script>

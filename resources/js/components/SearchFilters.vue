@@ -125,8 +125,6 @@ export default {
       this.isOpen = !this.isOpen
     },
     async populateForm() {
-
-
       this.orderBys = await this.$storage.remember('order_bys', async () => { return this.getList("local", "order_bys"); })
       this.makes    = await this.$storage.remember('makes', async () => { return this.getList("db", "makes"); })
     },

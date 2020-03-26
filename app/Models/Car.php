@@ -233,7 +233,7 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getEngineSizeFormattedAttribute(): string
     {
-        return number_format($this->engine_size / 1000, 1) . 'L';
+        return $this->engine_size . 'L';
     }
 
     /**

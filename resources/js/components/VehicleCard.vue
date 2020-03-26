@@ -11,6 +11,30 @@
                     <div class="mt-1">
                         {{ car.price_formatted }}
                     </div>
+
+                    <div class="flex justify-between mt-2 text-sm text-gray-600">
+                        <favourite
+                            class=""
+                            model="cars"
+                            v-bind:id="car.id"
+                            v-bind:favourited="car.is_favourited"
+                        />
+                        <div class="border-l border-gray-300"></div>
+                        <print
+                            class=""
+                            model="cars"
+                            v-bind:id="car.id"
+                            v-bind:favourited="car.is_favourited"
+                        />
+                        <div class="border-l border-gray-300"></div>
+                        <share
+                            class=""
+                            model="cars"
+                            v-bind:id="car.id"
+                            v-bind:favourited="car.is_favourited"
+                        />
+                    </div>
+
                 </div>
             </div>
         </router-link>
@@ -20,21 +44,27 @@
 <script>
 
 import VehicleFeatures from './VehicleFeatures'
+import Favourite from './Favourite'
+import Share from './Share'
+import Print from './Print'
 import ResponsiveImage from './controls/ResponsiveImage'
 
 export default {
   name: 'VehicleCard',
 
   components: {
-      VehicleFeatures,
-      ResponsiveImage
+    VehicleFeatures,
+    Favourite,
+    Share,
+    Print,
+    ResponsiveImage
   },
 
   props: {
-      car:{
-          type: Object,
-          default: null
-      },
+    car: {
+        type: Object,
+        default: null
+    },
   }
 }
 </script>
