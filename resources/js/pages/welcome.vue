@@ -1,7 +1,7 @@
 <template>
   <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
     <search-filters :filters="filter" v-on:update-results="onUpdate"/>
-    <main class="flex flex-wrap py-6 overflow-auto xl:flex-1">
+    <main class="flex flex-wrap min-h-screen py-6 overflow-auto xl:flex-1 xl:min-h-0">
       <vehicle-card v-for="car in cars" :car="car" :key="car.id"/>
       <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
         <span slot="spinner"></span>

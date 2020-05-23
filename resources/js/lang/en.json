@@ -1,5 +1,10 @@
 {
+    "more_details": "More Details",
     "view": "View {name}",
+    "share": "Share {name}",
+    "print": "Print {name}",
+    "favourite": "Favourite",
+    "unfavourite": "Unfavourite",
     "new": "New",
     "ok": "Ok",
     "cancel": "Cancel",

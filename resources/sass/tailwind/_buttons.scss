@@ -1,19 +1,28 @@
 .btn {
-  @apply text-gray-800 shadow-md rounded font-semibold leading-tight px-4 py-3;
+  @apply px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-md shadow-sm;
 }
 .btn:hover {
-  @apply bg-gray-200;
+  @apply bg-teal-500;
 }
 .btn:focus {
-  @apply shadow-outline outline-none;
+  @apply outline-none border-teal-700;
 }
 
-.btn-primary {
-  @apply text-white bg-teal-500;
+/* Small (sm) */
+@media (min-width: 640px) {
+  .btn {
+    @apply text-sm leading-5;
+  }
 }
-.btn-primary:hover {
-  @apply bg-teal-600;
-}
+
+/* Medium (md) */
+@media (min-width: 768px) { }
+
+/* Large (lg) */
+@media (min-width: 1024px) { }
+
+/* Extra Large (xl) */
+@media (min-width: 1280px) { }
 
 .btn-loading {
   position: relative;

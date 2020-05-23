@@ -10,16 +10,19 @@ use App\Enums\MediaCollectionType;
 use App\Traits\Scopes;
 
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 use CyrildeWit\EloquentViewable\Viewable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
+
 use ChristianKuri\LaravelFavorite\Traits\Favoriteable;
 
 class Car extends Model implements ViewableContract, HasMedia
 {
-    use SoftDeletes, Scopes, LogsActivity, Viewable, Favoriteable, HasMediaTrait;
+    use SoftDeletes, Scopes, LogsActivity, Viewable, Favoriteable, InteractsWithMedia;
 
     /**
      * The accessors to append to the model's array form.
@@ -94,7 +97,7 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return array
      */
-    public function registerMediaCollections(Media $media = null)
+    public function registerMediaCollections() : void
     {
         $this
             ->addMediaCollection(MediaCollectionType::CoverImage)
@@ -123,7 +126,7 @@ class Car extends Model implements ViewableContract, HasMedia
      *
      * @return array
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null) : void
     {
         // $this
         //     ->addMediaConversion('webp')
@@ -180,12 +183,13 @@ class Car extends Model implements ViewableContract, HasMedia
      */
     function getCoverImageAttribute()
     {
-        $media = $this->getMedia(MediaCollectionType::CoverImage)->first();
+        $media = $this->getFirstMedia(MediaCollectionType::CoverImage);
 
         if(isset($media))
         {
+            // $media->responsiveImages()->files->first()->width()
             $cover = [
-                'width'   => $media->responsiveImages()->files->first()->width(),
+                'width'   => 100,
                 'url'     => $media->getFullUrl(),
                 'src_set' => $media->getSrcset()
             ];

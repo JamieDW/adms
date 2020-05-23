@@ -1,7 +1,7 @@
 <template>
     <span>
-        <a href="#" @click.prevent="toggleFavourite()">
-            <svg viewBox="0 0 24 24" :class="toggledState" class="w-6 h-6 fill-current">
+        <a href="#" @click.prevent="toggleFavourite()" :title="this.isFavorited ? $t('unfavourite') : $t('favourite')">
+            <svg viewBox="0 0 24 24" :class="toggledState" class="w-6 h-6 transition duration-150 ease-in-out fill-current">
                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
             </svg>
         </a>
@@ -29,7 +29,7 @@ export default {
 
   computed: {
 		toggledState() {
-				return this.isFavorited ? 'text-red-500 hover:text-red-400' : 'text-gray-500 hover:text-gray-400'
+				return this.isFavorited ? 'text-red-500' : 'text-gray-500 hover:text-gray-600'
 		},
   },
 

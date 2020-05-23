@@ -6,15 +6,13 @@ require('laravel-mix-versionhash')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 
-mix.js('resources/js/app.js', 'public/dist/js');
-mix.sass('resources/sass/app.scss', 'public/dist/css')
-   .options({
-      processCssUrls: false,
-      postCss: [ tailwindcss('tailwind.config.js') ],
-})
-
-mix.disableNotifications()
-
+mix.js('resources/js/app.js', 'public/dist/js')
+  .sass('resources/sass/app.scss', 'public/dist/css')
+  .options({
+    processCssUrls: false,
+    postCss: [ tailwindcss('tailwind.config.js') ],
+  })
+  .disableNotifications();
 
 
 if (mix.inProduction()) {

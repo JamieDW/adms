@@ -33,7 +33,10 @@ module.exports = {
       },
       padding: {
         '5/6': '83.3333333%'
-      }
+      },
+      maxWidth: {
+        '7xl': '80rem',
+      },
     },
     customForms: theme => ({
       // horizontalPadding: defaultTheme.spacing[3],

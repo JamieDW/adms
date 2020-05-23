@@ -2,7 +2,7 @@
     <label class="block w-full px-2 mt-4 sm:mt-0 sm:w-1/2 lg:mt-4 lg:w-full">
         <span class="text-sm font-semibold text-gray-500"><slot/></span>
         <select
-            class="block w-full mt-1 text-white shadow form-select focus:bg-gray-600"
+            class="block w-full mt-1 text-white shadow form-select bg-gray-600"
             @change="$emit('change', selected)"
             v-model="selected">
             <option v-for="(option, index) in options"
